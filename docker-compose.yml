@@ -1,36 +1,9 @@
 services:
-  grafana:
-    image: grafana/grafana:11.1.0
-    container_name: pue-grafana
+  web:
+    build:
+      context: ./web
+    container_name: iso-22237-web
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
-    depends_on:
-      - prometheus
-
-  prometheus:
-    image: prom/prometheus:v2.53.0
-    container_name: pue-prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-
-  simulator:
-    build:
-      context: ./simulator
-    container_name: pue-simulator
-    ports:
-      - "8000:8000"
-    environment:
-      - STEP_SECONDS=2
-      - START_PROFILE=normal
+      - NODE_ENV=production
