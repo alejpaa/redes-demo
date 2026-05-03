@@ -11,9 +11,21 @@ import { MetricsCharts } from "@/components/metrics/metrics-charts";
 import { ScenarioSwitcher } from "@/components/simulation/scenario-switcher";
 import type { DataCenterState, ScenarioId } from "@/lib/types/datacenter";
 
+type DashboardSection = "overview" | "simulation" | "facility" | "metrics" | "compliance" | "alerts";
+
+const dashboardSections: { id: DashboardSection; label: string }[] = [
+  { id: "overview", label: "Resumen" },
+  { id: "simulation", label: "Escenarios" },
+  { id: "facility", label: "Salas" },
+  { id: "metrics", label: "Metricas" },
+  { id: "compliance", label: "ISO 22237" },
+  { id: "alerts", label: "Alertas" },
+];
+
 export function DataCenterDashboard() {
   const [state, setState] = useState<DataCenterState | null>(null);
   const [selectedZoneId, setSelectedZoneId] = useState("data-hall");
+  const [activeSection, setActiveSection] = useState<DashboardSection>("overview");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -94,17 +106,36 @@ export function DataCenterDashboard() {
 
         {error ? <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">{error}</div> : null}
 
-        <ExecutiveSummary state={state} />
-        <ScenarioSwitcher activeScenario={state.scenario} isUpdating={isPending} onScenarioChange={changeScenario} />
+        <nav className="sticky top-3 z-20 rounded-3xl border border-line bg-white/95 p-2 shadow-glow backdrop-blur" aria-label="Secciones del dashboard">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {dashboardSections.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                onClick={() => setActiveSection(section.id)}
+                className={`rounded-2xl px-3 py-2 text-sm font-medium transition ${activeSection === section.id ? "bg-blue-600 text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"}`}
+              >
+                {section.label}
+                {section.id === "alerts" && state.alerts.length > 0 ? <span className="ml-2 rounded-full bg-white/20 px-2 py-0.5 text-xs">{state.alerts.length}</span> : null}
+              </button>
+            ))}
+          </div>
+        </nav>
 
-        <div className="grid gap-5 xl:grid-cols-[1.35fr_0.65fr]">
-          <FacilityMap zones={state.zones} selectedZoneId={selectedZone.id} onSelectZone={setSelectedZoneId} />
-          <ZoneDetailPanel zone={selectedZone} alerts={state.alerts} />
-        </div>
+        {activeSection === "overview" ? <ExecutiveSummary state={state} /> : null}
 
-        <MetricsCharts state={state} />
-        <ComplianceMatrix compliance={state.compliance} />
-        <AlertsTable alerts={state.alerts} />
+        {activeSection === "simulation" ? <ScenarioSwitcher activeScenario={state.scenario} isUpdating={isPending} onScenarioChange={changeScenario} /> : null}
+
+        {activeSection === "facility" ? (
+          <div className="grid gap-5 xl:grid-cols-[1.35fr_0.65fr]">
+            <FacilityMap zones={state.zones} selectedZoneId={selectedZone.id} onSelectZone={setSelectedZoneId} />
+            <ZoneDetailPanel zone={selectedZone} alerts={state.alerts} />
+          </div>
+        ) : null}
+
+        {activeSection === "metrics" ? <MetricsCharts state={state} /> : null}
+        {activeSection === "compliance" ? <ComplianceMatrix compliance={state.compliance} /> : null}
+        {activeSection === "alerts" ? <AlertsTable alerts={state.alerts} /> : null}
 
         <footer className="pb-4 text-center text-xs text-slate-500">
           Esta plataforma no certifica ISO/IEC 22237 automaticamente; simula monitoreo, evaluacion y evidencia operacional alineada con la norma.
