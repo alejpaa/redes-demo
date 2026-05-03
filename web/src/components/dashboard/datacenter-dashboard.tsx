@@ -70,21 +70,21 @@ export function DataCenterDashboard() {
   const selectedZone = state.zones.find((zone) => zone.id === selectedZoneId) ?? state.zones[0];
 
   return (
-    <main className="min-h-screen bg-surface px-4 py-6 text-slate-950 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <header className="rounded-[2rem] border border-line bg-white p-6 shadow-glow">
+    <main className="min-h-screen bg-surface px-3 py-4 text-slate-950 sm:px-6 sm:py-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:gap-6">
+        <header className="rounded-3xl border border-line bg-white p-4 shadow-glow sm:p-6">
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
             <div>
               <div className="flex items-center gap-3 text-blue-700">
-                <ShieldCheck className="h-6 w-6" />
-                <span className="text-xs font-semibold uppercase tracking-[0.24em]">Digital Twin Compliance</span>
+                <ShieldCheck className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+                <span className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] sm:text-xs sm:tracking-[0.24em]">Digital Twin Compliance</span>
               </div>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-5xl">ISO/IEC 22237 Data Center Platform</h1>
+              <h1 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 sm:text-5xl">ISO/IEC 22237 Data Center Platform</h1>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
                 Demo profesional en Next.js para monitoreo, riesgos y evidencia simulada de cumplimiento sobre infraestructura fisica de data centers.
               </p>
             </div>
-            <div className="rounded-2xl border border-line bg-slate-50 p-4 text-sm text-slate-600">
+            <div className="w-full rounded-2xl border border-line bg-slate-50 p-4 text-sm text-slate-600 lg:w-auto lg:min-w-64">
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Escenario activo</p>
               <p className="mt-2 text-xl font-semibold text-slate-950">{state.scenario}</p>
               <p className="mt-1 text-xs text-slate-500">Actualizado: {new Date(state.timestamp).toLocaleTimeString()}</p>

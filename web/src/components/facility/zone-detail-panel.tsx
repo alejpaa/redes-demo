@@ -12,11 +12,11 @@ export function ZoneDetailPanel({ zone, alerts }: ZoneDetailPanelProps) {
   const zoneAlerts = alerts.filter((alert) => alert.zoneId === zone.id);
 
   return (
-    <aside className="rounded-3xl border border-line bg-white p-5 shadow-glow">
+    <aside className="rounded-3xl border border-line bg-white p-4 shadow-glow sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-blue-700">Detalle de zona</p>
-          <h2 className="mt-2 text-2xl font-semibold text-slate-950">{zone.name}</h2>
+          <h2 className="mt-2 text-xl font-semibold text-slate-950 sm:text-2xl">{zone.name}</h2>
         </div>
         <span className={`rounded-full border px-3 py-1 text-xs ${statusClasses(zone.status)}`}>{statusLabel(zone.status)}</span>
       </div>

@@ -9,7 +9,7 @@ type FacilityMapProps = {
 
 export function FacilityMap({ zones, selectedZoneId, onSelectZone }: FacilityMapProps) {
   return (
-    <section className="rounded-3xl border border-line bg-white p-5 shadow-glow">
+    <section className="rounded-3xl border border-line bg-white p-4 shadow-glow sm:p-5">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-xl font-semibold text-slate-950">Mapa del Data Center</h2>

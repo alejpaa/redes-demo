@@ -9,7 +9,7 @@ type ScenarioSwitcherProps = {
 
 export function ScenarioSwitcher({ activeScenario, isUpdating, onScenarioChange }: ScenarioSwitcherProps) {
   return (
-    <section className="rounded-3xl border border-line bg-white p-5 shadow-glow">
+    <section className="rounded-3xl border border-line bg-white p-4 shadow-glow sm:p-5">
       <div className="mb-4">
         <h2 className="text-xl font-semibold text-slate-950">Simulador de Escenarios</h2>
         <p className="text-sm text-slate-500">Cambia el estado operativo del data center desde la web.</p>
